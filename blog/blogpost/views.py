@@ -16,6 +16,6 @@ def contact(request):
     return render(request,"contact.html")
 
 
-def post(request,slug):
-    posts = Post.objects.get(slug=slug).first()
+def post(request,pk):
+    posts = Post.objects.get(id = pk)
     return render(request,"post.html",{'post':posts}) 

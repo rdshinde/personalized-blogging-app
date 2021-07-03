@@ -37,8 +37,8 @@
                             href="{% url 'index'%}">Home</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                             href="{% url 'about'%}">About</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
-                            href="#">Posts</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
+                            href="#">Posts</a></li> -->
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4"
                             href="{% url 'contact'%}">Contact</a></li>
                     <li class="nav-item "><a class="nav-link px-lg-3 py-3 py-lg-4"
@@ -67,9 +67,9 @@
                 <!-- Post preview-->
                 {% for post in post %}
                 <div class="post-preview">
-                    <a href="posts/ {{ post.slug }} ">
+                    <a href="posts/ {{ post.id}} ">
                         <h2 class="post-title">{{post.title}}</h2>
-                        <h3 class="post-subtitle">{{post.content | truncatewords:10}} </h3>
+                        <h3 class="post-subtitle">{{post.title}} </h3>
                     </a>
                     <p class="post-meta">
                         Posted by
