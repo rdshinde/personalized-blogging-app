@@ -19,3 +19,9 @@ def contact(request):
 def post(request,pk):
     posts = Post.objects.get(id = pk)
     return render(request,"post.html",{'post':posts}) 
+
+def login(request):
+    return render(request, 'login.html')
+
+def signup(request):
+    return render(request, 'signup.html')
