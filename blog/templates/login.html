@@ -19,7 +19,11 @@
 <main class="mb-4">
   <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
+      {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">{{message}}</div>
+      {% endfor %}
       <div class="col-md-10 col-lg-8 col-xl-7">
+        <h2 style="text-align: center;">Login</h2><br>
         <!-- Add the Login form Here -->
         <form method="post" action="/form" autocomplete="off">
           <div class="form-group">
@@ -29,11 +33,12 @@
               class="form-control"
               id="formGroupExampleInput"
               placeholder="Set the Username"
+              required
             />
           </div><br>
             <div class="form-group">
               <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              <input type="password" class="form-control" id="exampleInputPassword1" required placeholder="Password">
             </div><br>
             
             <button type="submit" class="btn btn-primary">Login</button>
