@@ -8,7 +8,10 @@
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
         <div class="page-heading">
-          <h1> <a href="{% url 'login' %}">Login </a> or <a href="{% url 'signup'%}">Signup</a></h1>
+          <h1>
+            <a href="{% url 'login' %}">Login </a> or
+            <a href="{% url 'signup'%}">Signup</a>
+          </h1>
           <span class="subheading">Let's connect me.</span>
         </div>
       </div>
@@ -20,30 +23,43 @@
   <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
       {% for message in messages %}
-      <div class="alert alert-success alert-dismissible fade show" role="alert">{{message}}</div>
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{message}}
+      </div>
       {% endfor %}
       <div class="col-md-10 col-lg-8 col-xl-7">
-        <h2 style="text-align: center;">Login</h2><br>
+        <h2 style="text-align: center">Login</h2>
+        <br />
         <!-- Add the Login form Here -->
-        <form method="post" action="/form" autocomplete="off">
+        <form method="post" action="{{'login'}}" autocomplete="off">
+          {% csrf_token %}
           <div class="form-group">
             <label for="formGroupExampleInput">Username</label>
             <input
+              name="username"
               type="text"
               class="form-control"
               id="formGroupExampleInput"
               placeholder="Set the Username"
               required
             />
-          </div><br>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" required placeholder="Password">
-            </div><br>
-            
-            <button type="submit" class="btn btn-primary">Login</button>
-          </form>
+          </div>
+          <br />
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input
+              name="password"
+              type="password"
+              class="form-control"
+              id="exampleInputPassword1"
+              required
+              placeholder="Password"
+            />
+          </div>
+          <br />
 
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
       </div>
     </div>
   </div>

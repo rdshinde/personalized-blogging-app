@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User , auth
+from django.contrib.auth.models import User , auth 
 from django.contrib import messages
 from django.views import generic
 from .models import Post
+
 
 # Create your views here.
 def index(request):
@@ -14,6 +15,11 @@ def about(request):
     return render(request,"about.html")
 
 
+def logout(request):
+    auth.logout(request)
+    return redirect('index')
+
+
 def contact(request):
     return render(request,"contact.html")
 
@@ -22,7 +28,22 @@ def post(request,pk):
     posts = Post.objects.get(id = pk)
     return render(request,"post.html",{'post':posts}) 
 
+
+
 def login(request):
+    
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = auth.authenticate(username=username, password=password)
+
+        if user is not None:
+            auth.login(request,user)
+            return redirect('index')
+        else:
+            messages.info(request, 'Invalid Credentials!')
+            return redirect('login')
+    
     return render(request, 'login.html')
 
 def signup(request):
