@@ -25,15 +25,15 @@
 <!-- Post Content-->
 <article class="mb-4">
   <div class="container px-4 px-lg-5">
-    {% if post.img_field != None %}
-    <img
-      src="{{post.img_field.url}}"
-      class="img-fluid"
-      alt="Responsive image"
-    />
-    {% endif %}
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
+        {% if post.img_field != None %}
+        <img
+          src="{{post.img_field.url}}"
+          class="img-fluid"
+          alt="Responsive image"
+        />
+        {% endif %}
         <p width="">{{post.content|linebreaks|urlize}}</p>
 
         {% if post.url_field != None %}
@@ -41,7 +41,6 @@
           @media only screen and (max-width: 400px) {
             iframe {
               width: 100%;
-              height: 20%;
               margin-bottom: 100%;
             }
           }
@@ -58,56 +57,73 @@
 
 <section class="container px-4 px-lg-5">
   <div class="row gx-4 gx-lg-5 justify-content-center">
-
-  
-  <div class="col-md-10 col-lg-8 col-xl-7">
-    <h2 style="text-align: center">Comment</h2>
-    <br />
-    <!-- Add the Login form Here -->
-    <form method="POST" action="{{'post'}}" autocomplete="off">
-      {% csrf_token %}
-      <div class="form-group">
-        <label for="formGroupExampleInput">Name</label>
-        <input
-          name="name"
-          type="text"
-          class="form-control"
-          id="formGroupExampleInput"
-          placeholder="Enter Your Name"
-          required
-        />
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      {% for post in comment %}
+      <ul>
+        
+        <small>Comment By {{comment.name}}</small>
+      <div class="container">
+        <p>
+          {{comment.body}}
+        </p>
       </div>
-      <br />
-      <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input
-          name="email"
-          type="email"
-          class="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
-          placeholder="Enter email"
-          required
-        />
-        <small id="emailHelp" class="form-text text-muted"
-          >We'll never share your email with anyone else.</small
-        >
-      </div>
-      <br>
-      <div class="form-group">
-        <label for="exampleFormControlTextarea1">Comment</label>
-        <textarea
-          name="comment"
-          class="form-control"
-          id="exampleFormControlTextarea1"
-          rows="3"
-        ></textarea>
-      </div>
-      <br />
-      <button type="submit" class="btn btn-primary">Comment</button><br>
-    </form>
+      </ul>
+      {% endfor %}
+    </div>
   </div>
-</div>
+</section>
+
+<!-- Add Comments -->
+<section class="container px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      <h2 style="text-align: center">Comment</h2>
+      <br />
+      <!-- Add the Login form Here -->
+      <form method="POST" autocomplete="off">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="formGroupExampleInput">Name</label>
+          <input
+            name="name"
+            type="text"
+            class="form-control"
+            id="formGroupExampleInput"
+            placeholder="Enter Your Name"
+            required
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input
+            name="email"
+            type="email"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            placeholder="Enter email"
+            required
+          />
+          <small id="emailHelp" class="form-text text-muted"
+            >We'll never share your email with anyone else.</small
+          >
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Comment</label>
+          <textarea
+            name="comment"
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+          ></textarea>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Comment</button><br />
+      </form>
+    </div>
+  </div>
 </section>
 
 {% endblock %}

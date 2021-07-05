@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User , auth 
 from django.contrib import messages
 from django.views import generic
@@ -15,14 +15,30 @@ class HomeView(ListView):
 #     template_name = 'post.html'
 
 def posts(request,slug):
-        if request.method == 'POST':
-            name = request.POST['name'].capitalize()
-            email = request.POST['email']
-            comment = request.POST['email']
-            return render(request,"post.html",slug)
+    posts = Post.objects.get(slug = slug)
+    post_instance = get_object_or_404(Post, slug=slug)
+    show_comment = Comment.objects.all()
+    if request.method == 'POST':
+        name = request.POST['name'].capitalize()
+        email = request.POST['email']
+        comment_body = request.POST['comment']
+        post = Comment()
+        post.name = name
+        post.post = post_instance
+        post.email = email
+        post.body = comment_body
+        post.save()
 
-        posts = Post.objects.get(slug = slug)
-        return render(request,"post.html",{'post':posts}) 
+
+        
+
+        return render(request,"post.html",{'post':posts,
+                                        'comment':show_comment }) 
+
+
+
+       
+    return render(request,"post.html",{'post':posts}) 
 
          
 # Create your views here.
