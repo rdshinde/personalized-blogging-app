@@ -10,19 +10,21 @@ class HomeView(ListView):
     model = Post
     template_name = 'index.html'
 
-class PostView(ListView):
-    model = Post
-    template_name = 'post.html'
-    
-    def post(request):
+# class PostView(ListView):
+#     model = Post
+#     template_name = 'post.html'
+
+def posts(request,slug):
         if request.method == 'POST':
             name = request.POST['name'].capitalize()
             email = request.POST['email']
             comment = request.POST['email']
+            return render(request,"post.html",slug)
 
-        return render(request,"post.html") 
+        posts = Post.objects.get(slug = slug)
+        return render(request,"post.html",{'post':posts}) 
 
-
+         
 # Create your views here.
 # def index(request):
     
@@ -36,14 +38,11 @@ def about(request):
 
 
 
-try:
-    @login_required()
-    def contact(request):
-        return render(request,"contact.html")
-except:
-    def contact(request):
-        messages.info(request,'Please Login')
-        return redirect('index')
+# @login_required_message(message="You should be logged in to make conatact.")
+@login_required(login_url='login')
+def contact(request):
+    return render(request,"contact.html")
+
     
 
 
@@ -90,7 +89,7 @@ def signup(request):
         
 
     return render(request, 'signup.html') 
-@login_required()
+@login_required(login_url='login')
 def logout(request):
     auth.logout(request)
     return redirect('index')
