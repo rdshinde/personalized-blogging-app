@@ -16,9 +16,8 @@ class HomeView(ListView):
 
 def posts(request,slug):
     posts = Post.objects.get(slug = slug)
-    post_instance = get_object_or_404(Post, slug=slug)
-    show_comment = Comment.objects.all()
     if request.method == 'POST':
+        post_instance = get_object_or_404(Post, slug=slug)
         name = request.POST['name'].capitalize()
         email = request.POST['email']
         comment_body = request.POST['comment']
@@ -28,19 +27,35 @@ def posts(request,slug):
         post.email = email
         post.body = comment_body
         post.save()
-
-
+        show_comment = Comment.objects.all()
         
-
         return render(request,"post.html",{'post':posts,
                                         'comment':show_comment }) 
+    else:  
+        return render(request,"post.html",{'post':posts,'comment':show_comment }) 
 
 
 
-       
-    return render(request,"post.html",{'post':posts}) 
+# def comment(request,slug):
+#     post_instance = get_object_or_404(Post, slug=slug)
+#     show_comment = Comment.objects.all()
+#     if request.method == 'POST':
+#         name = request.POST['name'].capitalize()
+#         email = request.POST['email']
+#         comment_body = request.POST['comment']
+#         post = Comment()
+#         post.name = name
+#         post.post = post_instance
+#         post.email = email
+#         post.body = comment_body
+#         post.save()
 
-         
+#         return render(request,"post.html",{'post':posts,
+#                                         'comment':show_comment }) 
+
+
+
+
 # Create your views here.
 # def index(request):
     
