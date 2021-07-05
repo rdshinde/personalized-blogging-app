@@ -2,31 +2,53 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User , auth 
 from django.contrib import messages
 from django.views import generic
-from .models import Post
+from django.views.generic import ListView, DetailView, DeleteView
+from django.contrib.auth.decorators import login_required
+from .models import Post, Comment
+
+class HomeView(ListView):
+    model = Post
+    template_name = 'index.html'
+
+class PostView(ListView):
+    model = Post
+    template_name = 'post.html'
+    
+    def post(request):
+        if request.method == 'POST':
+            name = request.POST['name'].capitalize()
+            email = request.POST['email']
+            comment = request.POST['email']
+
+        return render(request,"post.html") 
 
 
 # Create your views here.
-def index(request):
-    post = Post.objects.all()
-    return render(request,"index.html",{'post':post})
+# def index(request):
+    
+#     return render(request,"index.html")
 
 
 def about(request):
     return render(request,"about.html")
 
 
-def logout(request):
-    auth.logout(request)
-    return redirect('index')
 
 
-def contact(request):
-    return render(request,"contact.html")
+
+try:
+    @login_required()
+    def contact(request):
+        return render(request,"contact.html")
+except:
+    def contact(request):
+        messages.info(request,'Please Login')
+        return redirect('index')
+    
 
 
-def post(request,pk):
-    posts = Post.objects.get(id = pk)
-    return render(request,"post.html",{'post':posts}) 
+
+
 
 
 
@@ -68,4 +90,7 @@ def signup(request):
         
 
     return render(request, 'signup.html') 
-
+@login_required()
+def logout(request):
+    auth.logout(request)
+    return redirect('index')
