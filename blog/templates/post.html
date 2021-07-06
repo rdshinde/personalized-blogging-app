@@ -4,7 +4,7 @@
 <!-- Page Header-->
 <header
   class="masthead"
-  style="background-image: url('assets/img/post-bg.jpg')"
+  style="background-image: url('static/assets/img/post-bg.jpg')"
 >
   <div class="container position-relative px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -53,25 +53,6 @@
     </div>
   </div>
 </article>
-<!-- Comment Section -->
-
-<section class="container px-4 px-lg-5">
-  <div class="row gx-4 gx-lg-5 justify-content-center">
-    <div class="col-md-10 col-lg-8 col-xl-7">
-      {% for comments in comment %}
-      <ul>
-        
-        <small>Comment By {{comment.name}}</small>
-      <div class="container">
-        <p>
-          {{comment.body}}
-        </p>
-      </div>
-      </ul>
-      {% endfor %}
-    </div>
-  </div>
-</section>
 
 <!-- Add Comments -->
 <section class="container px-4 px-lg-5">
@@ -113,6 +94,7 @@
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Comment</label>
           <textarea
+            required
             name="comment"
             class="form-control"
             id="exampleFormControlTextarea1"
@@ -125,5 +107,20 @@
     </div>
   </div>
 </section>
-
-{% endblock %}
+<!-- Comment Section -->
+{% if user.is_authenticated %}
+<section class="container px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      {% for comments in comment %} {% if post.title == comment.post %}
+      <ul>
+        <small>Comment By {{comment.name}}</small>
+        <div class="container">
+          <p>{{comment.body}}</p>
+        </div>
+      </ul>
+      {% endif %} {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %} {% endblock %}

@@ -14,7 +14,7 @@ urlpatterns = [
     path('about',views.about, name='about'),
     path('contact',views.contact, name='contact'),
     path('posts/<str:slug>',views.posts, name='post'),
-    # path('posts/<str:slug>',views.comment, name='comment')
+    # path('posts/comment/<str:slug>',views.comment, name='comment')
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

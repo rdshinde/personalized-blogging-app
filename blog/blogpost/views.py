@@ -15,8 +15,11 @@ class HomeView(ListView):
 #     template_name = 'post.html'
 
 def posts(request,slug):
-    posts = Post.objects.get(slug = slug)
-    if request.method == 'POST':
+    if request.method != 'POST':
+        posts = Post.objects.get(slug = slug)
+        comments = Comment.objects.all()
+    
+    elif request.method == 'POST':
         post_instance = get_object_or_404(Post, slug=slug)
         name = request.POST['name'].capitalize()
         email = request.POST['email']
@@ -27,31 +30,15 @@ def posts(request,slug):
         post.email = email
         post.body = comment_body
         post.save()
-        show_comment = Comment.objects.all()
-        
-        return render(request,"post.html",{'post':posts,
-                                        'comment':show_comment }) 
-    else:  
-        return render(request,"post.html",{'post':posts,'comment':show_comment }) 
+        return redirect('post',slug=slug)
+        print(name,email,comment_body)
+    else:
+        pass
+    return render(request,"post.html",{'post':posts,'comment':comments }) 
 
 
 
-# def comment(request,slug):
-#     post_instance = get_object_or_404(Post, slug=slug)
-#     show_comment = Comment.objects.all()
-#     if request.method == 'POST':
-#         name = request.POST['name'].capitalize()
-#         email = request.POST['email']
-#         comment_body = request.POST['comment']
-#         post = Comment()
-#         post.name = name
-#         post.post = post_instance
-#         post.email = email
-#         post.body = comment_body
-#         post.save()
 
-#         return render(request,"post.html",{'post':posts,
-#                                         'comment':show_comment }) 
 
 
 
