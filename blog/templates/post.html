@@ -53,12 +53,12 @@
     </div>
   </div>
 </article>
-
+{% if user.is_authenticated %}
 <!-- Add Comments -->
 <section class="container px-4 px-lg-5">
   <div class="row gx-4 gx-lg-5 justify-content-center">
     <div class="col-md-10 col-lg-8 col-xl-7">
-      <h2 style="text-align: center">Comment</h2>
+      <h2 style="text-align:center">Comment</h2>
       <br />
       <!-- Add the Login form Here -->
       <form method="POST" autocomplete="off">
@@ -103,10 +103,17 @@
         </div>
         <br />
         <button type="submit" class="btn btn-primary">Comment</button><br />
+        
       </form>
+      
+      
     </div>
   </div>
 </section>
+{% else %} 
+      <a href=""><button type="submit" class="btn btn-primary">Please Login To Add Comments</button><br /></a>
+
+{% endif %} 
 <!-- Comment Section -->
 {% if user.is_authenticated %}
 <section class="container px-4 px-lg-5">
@@ -114,7 +121,7 @@
     <div class="col-md-10 col-lg-8 col-xl-7">
       {% for comments in comment %} {% if post.title == comment.post %}
       <ul>
-        <small>Comment By {{comment.name}}</small>
+        <small>Comment By {{comment.name}} on {{comment.created_on}}</small>
         <div class="container">
           <p>{{comment.body}}</p>
         </div>

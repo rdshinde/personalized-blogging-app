@@ -10,15 +10,12 @@ class HomeView(ListView):
     model = Post
     template_name = 'index.html'
 
-# class PostView(ListView):
-#     model = Post
-#     template_name = 'post.html'
+
 
 def posts(request,slug):
+    comments = Comment.objects.all()
     if request.method != 'POST':
         posts = Post.objects.get(slug = slug)
-        comments = Comment.objects.all()
-    
     elif request.method == 'POST':
         post_instance = get_object_or_404(Post, slug=slug)
         name = request.POST['name'].capitalize()
@@ -85,6 +82,10 @@ def login(request):
     
     return render(request, 'login.html')
 
+
+
+
+
 def signup(request):
     if request.method == 'POST':
         first_name =  request.POST['first_name'].capitalize()
@@ -107,6 +108,9 @@ def signup(request):
         
 
     return render(request, 'signup.html') 
+
+
+
 @login_required(login_url='login')
 def logout(request):
     auth.logout(request)
