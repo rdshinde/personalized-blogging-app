@@ -25,13 +25,18 @@
 <!-- Main Content-->
 <div class="container px-4 px-lg-5">
   <div class="row gx-4 gx-lg-5 justify-content-center">
+    {% for message in messages %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{message}}
+      </div>
+      {% endfor %}
     <div class="col-md-10 col-lg-8 col-xl-7">
       <!-- Post preview-->
-      {% for post in post %}
+      {% for post in object_list %}
       <div class="post-preview">
-        <a href="posts/ {{ post.id}} ">
+        <a href="{% url 'post' post.slug %}">
           <h2 class="post-title">{{post.title}}</h2>
-          <h3 class="post-subtitle">{{post.title}}</h3>
+          <h3 class="post-subtitle">{{post.subtitle}}</h3>
         </a>
         <p class="post-meta">
           Posted by
@@ -44,9 +49,18 @@
       {% endfor %}
 
       <!-- Pager-->
+      {% if user.is_authenticated == False %}
+            <a href="{% url 'login'%}" class="d-flex justify-content-end mb-4">
+                <button class="btn btn-primary text-uppercase">
+                    Please Login to see older posts.
+                </button></a>
+            {% endif %}
+      {% if user.is_authenticated %} 
       <div class="d-flex justify-content-end mb-4">
         <a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a>
+        
       </div>
+      {% endif %}
     </div>
   </div>
 </div>

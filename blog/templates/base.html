@@ -10,7 +10,9 @@
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Rishikesh's Blog</title>
+
+    <title>{% block title %} Rishikesh's Blog {% endblock %}</title>
+
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
     <script
@@ -88,7 +90,7 @@
     <!-- Block Creation for Extending Templates -->
     <div class="wrapper">{% block content %} {% endblock %}</div>
     <!-- Footer-->
-    <footer class="border-top">
+    <footer class="border-top" style="margin-top: 100%">
       <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
           <div class="col-md-10 col-lg-8 col-xl-7">
@@ -110,7 +112,7 @@
                 </a>
               </li>
               <li class="list-inline-item">
-                <a href="#!">
+                <a href="https://github.com/rdshinde">
                   <span class="fa-stack fa-lg">
                     <i class="fas fa-circle fa-stack-2x"></i>
                     <i class="fab fa-github fa-stack-1x fa-inverse"></i>

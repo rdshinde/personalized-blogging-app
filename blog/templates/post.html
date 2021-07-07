@@ -1,91 +1,158 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% block title %} {{post.subtitle}} {% endblock %}
+{%block content %}
 
 <!-- Page Header-->
-<header class="masthead" style="background-image: url('assets/img/post-bg.jpg')">
-    <div class="container position-relative px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                <div class="post-heading">
-                    <h1>{{post.title}}</h1>
-                    <h2 class="subheading">{{post.title}}</h2>
-                    <span class="meta">
-                        Posted by
-                        <a href="{% url 'about'%}">Rishikesh Shinde</a>
-                        on {{post.created_on}}
-                    </span>
-                </div>
-            </div>
+<header
+  class="masthead"
+  style="background-image: url('static/assets/img/post-bg.jpg')"
+>
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="post-heading">
+          <h1>{{post.title}}</h1>
+          <h2 class="subheading">{{post.subtitle}}</h2>
+          <span class="meta">
+            Posted by
+            <a href="{% url 'about'%}">Rishikesh Shinde</a>
+            on {{post.created_on}}
+          </span>
         </div>
+      </div>
     </div>
+  </div>
 </header>
 <!-- Post Content-->
 <article class="mb-4">
-    <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                <p width="">{{post.content|linebreaks}}</p>
-
-                {% if post.url_field != None %}
-                <style>
-                    @media only screen and (max-width: 400px) {
-                        iframe {
-                            width: 95%;
-                            height: 50%;
-                        }
-                    }
-                </style>
-
-                <iframe width="100%" height="375" src="{{post.url_field}} "> </iframe>
-                {% endif %}
-            </div>
-            {% if user.is_authenticated == False %}
-            <a href="{% url 'login'%}" style="text-align: center;">
-                <button class="btn btn-primary text-uppercase">
-                    Please Login to add a comment.
-                </button></a>
-            {% endif %}
-            {% if user.is_authenticated %}
-            <h2 style="text-align: center">Comment</h2>
-            <div class="my-5">
-                <form id="contactForm" action="{{'post'}}">
-                    <div class="form-floating">
-                        <input class="form-control" id="name" type="text" placeholder="Enter your name..."
-                            data-sb-validations="required" />
-                        <label for="name">Name</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">
-                            A name is required.
-                        </div>
-                    </div>
-                    <div class="form-floating">
-                        <input class="form-control" id="email" type="email" placeholder="Enter your email..."
-                            data-sb-validations="required,email" />
-                        <label for="email">Email address</label>
-                        <div class="invalid-feedback" data-sb-feedback="email:required">
-                            An email is required.
-                        </div>
-                        <div class="invalid-feedback" data-sb-feedback="email:email">
-                            Email is not valid.
-                        </div>
-                    </div>
-                    <div class="form-floating">
-                        <textarea class="form-control" id="message" placeholder="Enter your message here..."
-                            style="height: 12rem" data-sb-validations="required"></textarea>
-                        <label for="message">Comment</label>
-                        <div>
-                            A comment is required.
-                        </div>
-                    </div>
-                    <br />
-            </div>
-            <!-- Submit Button-->
-            <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">
-                Comment
-            </button>
-            </form>
-        </div>
+  <div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        {% if post.img_field != None %}
+        <img
+          src="{{post.img_field.url}}"
+          class="img-fluid"
+          alt="Responsive image"
+        />
         {% endif %}
+        <p width="">{{post.content|linebreaks|urlize}}</p>
 
+        {% if post.url_field != None %}
+        <style>
+          @media only screen and (max-width: 400px) {
+            iframe {
+              width: 100%;
+              margin-bottom: 100%;
+            }
+          }
+        </style>
+
+        <iframe width="100%" height="375" src="{{post.url_field}} "> </iframe>
+        {% endif %}
+      </div>
+      <br />
+      <hr />
     </div>
-    </div>
+  </div>
 </article>
-{% endblock %}
+{% if user.is_authenticated %}
+<!-- Add Comments -->
+<section class="container px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      <h2 style="text-align: center">Leave A Comment</h2>
+      <br />
+      <!-- Add the Login form Here -->
+      <form method="POST" autocomplete="off">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="formGroupExampleInput">Name</label>
+          <input
+            name="name"
+            type="text"
+            class="form-control"
+            id="formGroupExampleInput"
+            placeholder="Enter Your Name"
+            required
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input
+            name="email"
+            type="email"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            placeholder="Enter email"
+            required
+          />
+          <small id="emailHelp" class="form-text text-muted"
+            >We'll never share your email with anyone else.</small
+          >
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Comment</label>
+          <textarea
+            placeholder="Write your comment."
+            required
+            name="comment"
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+          ></textarea>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary" style="text-align: center;">Comment</button><br />
+        {% else %}
+<a href="{% url 'login'%}" class="btn btn-primary"
+  >Please Login To Add and View Comments
+  <a>
+    <br />
+
+    {% endif %}
+      </form>
+    </div>
+  </div>
+</section>
+
+    <!-- Comment Section -->
+    {% if user.is_authenticated %}
+    <section class="container px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+          <br />
+          <hr />
+          <br />
+          <h2 style="text-align: center">Comments</h2>
+          <br />
+          <hr />
+          {% if not post.comments.all %}
+          <p style="text-align: center">No Comments</p>
+          {% endif %} {% for comments in post.comments.all %}
+          <ul>
+            <li>
+              <p class="post-meta">
+                Posted by <strong>{{comments.name}}</strong>
+                
+                on {{comments.created_on}}
+              </p>
+              <!-- <small>
+            Comment By - <strong>{{comments.name}}</strong> on
+            {{comments.created_on}}
+          </small> -->
+
+              <div class="container">
+                <p>{{comments.body}}</p>
+              </div>
+            </li>
+          </ul>
+          <hr />
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    {% endif %} {% endblock %}
+  </a></a
+>

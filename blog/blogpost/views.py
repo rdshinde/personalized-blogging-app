@@ -1,32 +1,68 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User , auth 
 from django.contrib import messages
 from django.views import generic
-from .models import Post
+from django.views.generic import ListView, DetailView, DeleteView
+from django.contrib.auth.decorators import login_required
+from .models import Post, Comment
+
+class HomeView(ListView):
+    model = Post
+    template_name = 'index.html'
+
+
+
+def posts(request,slug):
+    # comments = Comment.objects.all()
+    if request.method != 'POST':
+        posts = Post.objects.get(slug = slug)
+    elif request.method == 'POST':
+        post_instance = get_object_or_404(Post, slug=slug)
+        name = request.POST['name']
+        email = request.POST['email']
+        comment_body = request.POST['comment']
+        post = Comment()
+        post.name = name
+        post.post = post_instance
+        post.email = email
+        post.body = comment_body
+        post.save()
+        return redirect('post',slug=slug)
+        # print(name,email,comment_body)
+    else:
+        pass
+    return render(request,"post.html",{'post':posts}) 
+
+
+
+
+
+
 
 
 # Create your views here.
-def index(request):
-    post = Post.objects.all()
-    return render(request,"index.html",{'post':post})
+# def index(request):
+    
+#     return render(request,"index.html")
 
 
 def about(request):
     return render(request,"about.html")
 
 
-def logout(request):
-    auth.logout(request)
-    return redirect('index')
 
 
+
+# @login_required_message(message="You should be logged in to make conatact.")
+@login_required(login_url='login')
 def contact(request):
     return render(request,"contact.html")
 
+    
 
-def post(request,pk):
-    posts = Post.objects.get(id = pk)
-    return render(request,"post.html",{'post':posts}) 
+
+
+
 
 
 
@@ -45,6 +81,10 @@ def login(request):
             return redirect('login')
     
     return render(request, 'login.html')
+
+
+
+
 
 def signup(request):
     if request.method == 'POST':
@@ -69,3 +109,9 @@ def signup(request):
 
     return render(request, 'signup.html') 
 
+
+
+@login_required(login_url='login')
+def logout(request):
+    auth.logout(request)
+    return redirect('index')
