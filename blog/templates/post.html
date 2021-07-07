@@ -49,6 +49,7 @@
         <iframe width="100%" height="375" src="{{post.url_field}} "> </iframe>
         {% endif %}
       </div>
+      <br />
       <hr />
     </div>
   </div>
@@ -58,7 +59,7 @@
 <section class="container px-4 px-lg-5">
   <div class="row gx-4 gx-lg-5 justify-content-center">
     <div class="col-md-10 col-lg-8 col-xl-7">
-      <h2 style="text-align:center">Comment</h2>
+      <h2 style="text-align: center">Leave A Comment</h2>
       <br />
       <!-- Add the Login form Here -->
       <form method="POST" autocomplete="off">
@@ -94,6 +95,7 @@
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Comment</label>
           <textarea
+            placeholder="Write your comment."
             required
             name="comment"
             class="form-control"
@@ -102,32 +104,55 @@
           ></textarea>
         </div>
         <br />
-        <button type="submit" class="btn btn-primary">Comment</button><br />
-        
-      </form>
-      
-      
-    </div>
-  </div>
-</section>
-{% else %} 
-      <a href=""><button type="submit" class="btn btn-primary">Please Login To Add Comments</button><br /></a>
+        <button type="submit" class="btn btn-primary" style="text-align: center;">Comment</button><br />
+        {% else %}
+<a href="{% url 'login'%}" class="btn btn-primary"
+  >Please Login To Add and View Comments
+  <a>
+    <br />
 
-{% endif %} 
-<!-- Comment Section -->
-{% if user.is_authenticated %}
-<section class="container px-4 px-lg-5">
-  <div class="row gx-4 gx-lg-5 justify-content-center">
-    <div class="col-md-10 col-lg-8 col-xl-7">
-      {% for comments in comment %} {% if post.title == comment.post %}
-      <ul>
-        <small>Comment By {{comment.name}} on {{comment.created_on}}</small>
-        <div class="container">
-          <p>{{comment.body}}</p>
-        </div>
-      </ul>
-      {% endif %} {% endfor %}
+    {% endif %}
+      </form>
     </div>
   </div>
 </section>
-{% endif %} {% endblock %}
+
+    <!-- Comment Section -->
+    {% if user.is_authenticated %}
+    <section class="container px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+          <br />
+          <hr />
+          <br />
+          <h2 style="text-align: center">Comments</h2>
+          <br />
+          <hr />
+          {% if not post.comments.all %}
+          <p style="text-align: center">No Comments</p>
+          {% endif %} {% for comments in post.comments.all %}
+          <ul>
+            <li>
+              <p class="post-meta">
+                Posted by <strong>{{comments.name}}</strong>
+                
+                on {{comments.created_on}}
+              </p>
+              <!-- <small>
+            Comment By - <strong>{{comments.name}}</strong> on
+            {{comments.created_on}}
+          </small> -->
+
+              <div class="container">
+                <p>{{comments.body}}</p>
+              </div>
+            </li>
+          </ul>
+          <hr />
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    {% endif %} {% endblock %}
+  </a></a
+>

@@ -13,12 +13,12 @@ class HomeView(ListView):
 
 
 def posts(request,slug):
-    comments = Comment.objects.all()
+    # comments = Comment.objects.all()
     if request.method != 'POST':
         posts = Post.objects.get(slug = slug)
     elif request.method == 'POST':
         post_instance = get_object_or_404(Post, slug=slug)
-        name = request.POST['name'].capitalize()
+        name = request.POST['name']
         email = request.POST['email']
         comment_body = request.POST['comment']
         post = Comment()
@@ -28,10 +28,10 @@ def posts(request,slug):
         post.body = comment_body
         post.save()
         return redirect('post',slug=slug)
-        print(name,email,comment_body)
+        # print(name,email,comment_body)
     else:
         pass
-    return render(request,"post.html",{'post':posts,'comment':comments }) 
+    return render(request,"post.html",{'post':posts}) 
 
 
 
