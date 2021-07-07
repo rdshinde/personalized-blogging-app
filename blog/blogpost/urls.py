@@ -17,7 +17,7 @@ urlpatterns = [
     path('about',views.about, name='about'),
     path('contact',views.contact, name='contact'),
     path('posts/<str:slug>',views.posts, name='post'),
-    url(r'^favicon\.ico$',RedirectView.as_view(url='blog/static/assets/fevicon.ico')),
+    url(r'^favicon\.ico$',RedirectView.as_view(url='static/assets/fevicon.ico')),
     # path('posts/comment/<str:slug>',views.comment, name='comment')
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
