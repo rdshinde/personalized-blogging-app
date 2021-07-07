@@ -23,7 +23,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('', include('blogpost.urls')),
     path('admin/', admin.site.urls),
-    url(r'^favicon\.ico$',RedirectView.as_view(url='/static/brain-removebg-preview.png')),
+    url(r'^favicon\.ico$',RedirectView.as_view(url='blog/static/assets/fevicon.ico')),
 ]
 #added manually
 urlpatterns += staticfiles_urlpatterns()

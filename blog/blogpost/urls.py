@@ -1,10 +1,13 @@
 from django.urls import path
 from django.conf import settings
+from django.views.generic import RedirectView
+from django.conf.urls import url
 from . import views
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 from .views import HomeView
+
 
 urlpatterns = [
     path('', HomeView.as_view() , name='index'),
@@ -14,6 +17,7 @@ urlpatterns = [
     path('about',views.about, name='about'),
     path('contact',views.contact, name='contact'),
     path('posts/<str:slug>',views.posts, name='post'),
+    url(r'^favicon\.ico$',RedirectView.as_view(url='blog/static/assets/fevicon.ico')),
     # path('posts/comment/<str:slug>',views.comment, name='comment')
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
