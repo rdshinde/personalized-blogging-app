@@ -57,12 +57,12 @@
 {% if user.is_authenticated %}
 <!-- Add Comments -->
 <section class="container px-4 px-lg-5">
-  <div class="row gx-4 gx-lg-5 justify-content-center">
+  <div class="row gx-4 gx-lg-5 justify-content-center" id="form">
     <div class="col-md-10 col-lg-8 col-xl-7">
       <h2 style="text-align: center">Leave A Comment</h2>
       <br />
       <!-- Add the Login form Here -->
-      <form method="POST" autocomplete="off">
+      <form method="POST" autocomplete="off" >
         {% csrf_token %}
         <div class="form-group">
           <label for="formGroupExampleInput">Name</label>
@@ -108,7 +108,7 @@
         {% else %}
 <a href="{% url 'login'%}" class="btn btn-primary"
   >Please Login To Add and View Comments
-  <a>
+</a>
     <br />
 
     {% endif %}
@@ -129,7 +129,9 @@
           <br />
           <hr />
           {% if not post.comments.all %}
-          <p style="text-align: center">No Comments</p>
+          <p style="text-align: center">No Comments <br><br><a href="#form" class="btn btn-primary" style="text-decoration: none;"
+            >Add One
+          </a> </p>
           {% endif %} {% for comments in post.comments.all %}
           <ul>
             <li>
