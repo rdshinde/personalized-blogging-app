@@ -5,6 +5,8 @@ from django.views import generic
 from django.views.generic import ListView, DetailView, DeleteView
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment
+from django.urls import reverse_lazy, reverse 
+from django.http import HttpResponseRedirect
 
 class HomeView(ListView):
     model = Post
@@ -12,8 +14,11 @@ class HomeView(ListView):
 
 
 
+
+
+
 def posts(request,slug):
-    # comments = Comment.objects.all()
+    
     if request.method != 'POST':
         posts = Post.objects.get(slug = slug)
     elif request.method == 'POST':
@@ -28,10 +33,11 @@ def posts(request,slug):
         post.body = comment_body
         post.save()
         return redirect('post',slug=slug)
-        # print(name,email,comment_body)
+        
     else:
         pass
     return render(request,"post.html",{'post':posts}) 
+
 
 
 
@@ -115,3 +121,10 @@ def signup(request):
 def logout(request):
     auth.logout(request)
     return redirect('index')
+
+
+
+# def LikeView(request,slug):
+#     post_like = get_object_or_404(Post, slug=slug)
+#     post.likes.add(request.user)
+#     return HttpResponseRedirect(reverse('HomeView',args=[str(slug)]))

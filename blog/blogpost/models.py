@@ -20,7 +20,7 @@ class Post(models.Model):
     url_field = models.URLField(max_length=300, default='URLInput', blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=STATUS, default=0)
-    
+    likes = models.ManyToManyField(User, related_name='blog_post')
     
 
     class Meta:
@@ -31,9 +31,9 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comments')
-    name = models.CharField(max_length=80)
-    email = models.EmailField(default="mail@email.com")
-    body = models.TextField()
+    name = models.CharField(max_length=80,null=True)
+    email = models.EmailField(default="mail@email.com",null=True)
+    body = models.TextField(null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
     

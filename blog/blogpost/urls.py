@@ -17,6 +17,7 @@ urlpatterns = [
     path('about',views.about, name='about'),
     path('contact',views.contact, name='contact'),
     path('posts/<str:slug>',views.posts, name='post'),
+    # path('like/<str:slug>',LikeView,name='like_post'),
     url(r'^favicon\.ico$',RedirectView.as_view(url='static/assets/fevicon.ico')),
     # path('posts/comment/<str:slug>',views.comment, name='comment')
     
