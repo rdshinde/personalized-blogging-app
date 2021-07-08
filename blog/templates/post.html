@@ -34,7 +34,7 @@
           alt="Responsive image"
         />
         {% endif %}
-        <p width="">{{post.content|linebreaks|urlize}}</p>
+        <p width="">{{post.content|safe}}</p>
 
         {% if post.url_field != None %}
         <style>
