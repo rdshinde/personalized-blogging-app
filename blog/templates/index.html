@@ -1,18 +1,13 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <!-- Page Header-->
-<header
-  class="masthead"
-  style="background-image: none"
->
+<header class="masthead" style="background-image: none">
   <div class="container position-relative px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
         <div class="site-heading">
-          {% if user.is_authenticated %} 
+          {% if user.is_authenticated %}
 
-          <h1 style="font-size: 4rem;">Welcome, {{user.first_name}} </h1>
+          <h1 style="font-size: 4rem">Welcome, {{user.first_name}}</h1>
           {% else %}
           <h1>Technical Blogs</h1>
           {% endif %}
@@ -26,10 +21,10 @@
 <div class="container px-4 px-lg-5">
   <div class="row gx-4 gx-lg-5 justify-content-center">
     {% for message in messages %}
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        {{message}}
-      </div>
-      {% endfor %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{message}}
+    </div>
+    {% endfor %}
     <div class="col-md-10 col-lg-8 col-xl-7">
       <!-- Post preview-->
       {% for post in object_list %}
@@ -44,21 +39,25 @@
           on {{post.created_on}}
         </p>
       </div>
+      <!-- <div>
+        <form method="POST">
+          {% csrf_token %} <button type="submit" value="{{post.slug}}" name="post_slug"  ><i class="fas fa-heart"></i></button> {{blog_post.likes.count}}
+        </form>
+      </div> -->
       <!-- Divider-->
       <hr class="my-4" />
       {% endfor %}
 
       <!-- Pager-->
       {% if user.is_authenticated == False %}
-            <a href="{% url 'login'%}" class="d-flex justify-content-end mb-4">
-                <button class="btn btn-primary text-uppercase">
-                    Please Login to see older posts.
-                </button></a>
-            {% endif %}
-      {% if user.is_authenticated %} 
+      <a href="{% url 'login'%}" class="d-flex justify-content-end mb-4">
+        <button class="btn btn-primary text-uppercase">
+          Please Login to see older posts.
+        </button></a
+      >
+      {% endif %} {% if user.is_authenticated %}
       <div class="d-flex justify-content-end mb-4">
         <a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a>
-        
       </div>
       {% endif %}
     </div>
