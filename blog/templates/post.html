@@ -150,6 +150,9 @@
               </div>
             </li>
           </ul>
+          {% if user == comments.user %}
+          <a href="{% url comments-delete comments.id %}">delete comment</a> 
+        {% endif %}
           <hr />
           {% endfor %}
         </div>

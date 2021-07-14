@@ -9,6 +9,7 @@ from django.conf.urls.static import static
 from .views import HomeView
 
 
+
 urlpatterns = [
     path('', HomeView.as_view() , name='index'),
     path('login', views.login, name='login'),
@@ -17,9 +18,9 @@ urlpatterns = [
     path('about',views.about, name='about'),
     path('contact',views.contact, name='contact'),
     path('posts/<str:slug>',views.posts, name='post'),
-    # path('like/<str:slug>',LikeView,name='like_post'),
+    # url(r'^delete/(\d+)/$',  moderation.delete, name='comments-delete'),
     url(r'^favicon\.ico$',RedirectView.as_view(url='static/assets/fevicon.ico')),
-    # path('posts/comment/<str:slug>',views.comment, name='comment')
+    
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
