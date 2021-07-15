@@ -72,8 +72,8 @@ def contact(request):
         send_mail(
         name,
         'Email From: '+email+'\n'+'Contact Number: '+phone+'\n\n'+message,
-        email,
-        ['kalyani2007shinde@gmail.com'],
+        "Rishikesh's Blog"+email,
+        ['kalyani2007shinde@gmail.com',email],
         fail_silently=False,)
         messages.info(request,'Message sent succesfully!')
         
@@ -131,8 +131,8 @@ def signup(request):
             messages.info(request,'Account Created Succesfully!')
             send_mail(
             'Account Created Succfully!',
-            'Welcome to a blog by Rishikesh\n'+'Your Username is: '+ username +'\n Password is: '+ password +'\n Login at: '+'http://127.0.0.1:8000/login',
-            'kalyani2007shinde@gmail.com',
+            'Welcome to a blog by Rishikesh\n'+'Your Username is: '+ username +'\n Password is: '+ password +'\n Login at: '+'shinderd.pythonanywhere.com/login',
+            "Rishikesh's Blog"+'kalyani2007shinde@gmail.com',
             [email],
             fail_silently=False)
             return redirect('login')
