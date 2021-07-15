@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Post, Comment
 from django.urls import reverse_lazy, reverse 
 from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
 
 class HomeView(ListView):
     model = Post
@@ -62,7 +63,25 @@ def about(request):
 # @login_required_message(message="You should be logged in to make conatact.")
 @login_required(login_url='login')
 def contact(request):
-    return render(request,"contact.html")
+    if request.method == 'POST':
+        name = request.POST['name']
+        phone = request.POST['phone']
+        email = request.POST['from_email']
+        message = request.POST['message']
+
+        send_mail(
+        name,
+        'Email From: '+email+'\n'+'Contact Number: '+phone+'\n\n'+message,
+        email,
+        ['kalyani2007shinde@gmail.com'],
+        fail_silently=False,)
+        messages.info(request,'Message sent succesfully!')
+        
+        return redirect('contact')
+
+
+    else:
+        return render(request,"contact.html")
 
     
 
@@ -110,6 +129,12 @@ def signup(request):
             user = User.objects.create_user(first_name=first_name,last_name=last_name,username=username,password=password,email=email)
             user.save()
             messages.info(request,'Account Created Succesfully!')
+            send_mail(
+            'Account Created Succfully!',
+            'Welcome to a blog by Rishikesh\n'+'Your Username is: '+ username +'\n Password is: '+ password +'\n Login at: '+'http://127.0.0.1:8000/login',
+            'kalyani2007shinde@gmail.com',
+            [email],
+            fail_silently=False)
             return redirect('login')
         
 
