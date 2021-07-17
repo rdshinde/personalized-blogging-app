@@ -9,16 +9,25 @@ from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
 
+
+@login_required(login_url='login')
+def LikeView(request,slug):
+    post = get_object_or_404(Post, slug = request.POST.get('post_slug'))
+    post.likes.add(request.user)
+    return HttpResponseRedirect(reverse('post',args=[str(slug )]))
+
+
+
+
 class HomeView(ListView):
     model = Post
     template_name = 'index.html'
 
 
-
-
-
-
 def posts(request,slug):
+    post_likes = get_object_or_404(Post,slug=slug )
+    likes = post_likes.total_likes()
+    
     
     if request.method != 'POST':
         posts = Post.objects.get(slug = slug)
@@ -37,7 +46,7 @@ def posts(request,slug):
         
     else:
         pass
-    return render(request,"post.html",{'post':posts}) 
+    return render(request,"post.html",{'post':posts, 'total_likes':likes}) 
 
 
 

@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block title %} {{post.subtitle}} {% endblock %}
+{% extends 'base.html' %} {% block title %} Blog | {{post.subtitle}} {% endblock %}
 {%block content %}
 
 <!-- Page Header-->
@@ -16,7 +16,8 @@
             Posted by
             <a href="{% url 'about'%}">Rishikesh Shinde</a>
             on {{post.created_on}}
-          </span>
+          </span><br>
+          <a href="#like" style="color: wheat;"><i class="fa fa-heart"  aria-hidden="true"></i> &nbsp; {{total_likes}}</a>
         </div>
       </div>
     </div>
@@ -46,16 +47,20 @@
           }
         </style>
 
-        <iframe width="100%" height="375" src="{{post.url_field}} "> </iframe>
+        <iframe width="100%" height="375" src="{{post.url_field}} "> </iframe> 
         {% endif %}
-      </div>
-      <br />
-      <hr />
+      </div><form action="{% url 'like_post' post.slug %}" method="POST" id="like">
+        {% csrf_token %}
+        <button type="submit" name="post_slug" value="{{ post.slug }}" class="btn btn-secondary"><i class="fa fa-heart" aria-hidden="true"></i> {{total_likes}}</button> 
+      </form><br>
+      <br>
+      
+      <hr>
     </div>
   </div>
 </article>
 {% if user.is_authenticated %}
-<!-- Add Comments -->
+<!-- Add Comments -->  
 <section class="container px-4 px-lg-5">
   <div class="row gx-4 gx-lg-5 justify-content-center" id="form">
     <div class="col-md-10 col-lg-8 col-xl-7">

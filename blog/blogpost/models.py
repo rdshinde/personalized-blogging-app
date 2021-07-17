@@ -22,6 +22,8 @@ class Post(models.Model):
     status = models.IntegerField(choices=STATUS, default=0)
     likes = models.ManyToManyField(User, related_name='blog_post')
     
+    def total_likes(self):
+        return self.likes.count()
 
     class Meta:
         ordering = ['-created_on']
