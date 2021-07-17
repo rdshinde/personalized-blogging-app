@@ -17,10 +17,10 @@ class Post(models.Model):
     updated_on = models.DateTimeField(auto_now= True)
     content = RichTextField(blank=True,null=True,default='write here')
     img_field = models.FileField(null=True, blank=True)
-    url_field = models.URLField(max_length=300, default='URLInput', blank=True)
+    url_field = models.URLField(max_length=300, default='', blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=STATUS, default=0)
-    likes = models.ManyToManyField(User, related_name='blog_post')
+    likes = models.ManyToManyField(User, related_name='blog_post',null=True)
     
     def total_likes(self):
         return self.likes.count()
@@ -38,6 +38,13 @@ class Comment(models.Model):
     body = models.TextField(null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
+    likes = models.ManyToManyField(User, related_name='comment',null=True)
+    
+    def total_likes(self):
+        return self.likes.count()
+
+    def total_comments(self):
+        return self.body.count()
     
 
     class Meta:
