@@ -159,7 +159,7 @@
           </ul>
           <form action="{% url 'like_comment' comments.id %}" method="POST" id="Comment-like">
             {% csrf_token %}
-            <button type="submit" name="comment_id" value="{{ comments.id }}" class="btn btn-secondary"><i class="fa fa-heart" aria-hidden="true"></i> {{total_comment_likes}}</button> 
+            <button type="submit" name="comment_id" value="{{ comments.id}}" class="btn btn-secondary"><i class="fa fa-heart" aria-hidden="true"></i> {{total_comment_likes}}</button> 
           </form><br>
           <hr />
           {% endfor %}

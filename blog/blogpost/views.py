@@ -12,8 +12,10 @@ from django.core.mail import send_mail
 
 @login_required(login_url='login')
 def CommentLike(request,id):
-    comment = get_object_or_404(Comment, id = request.POST.get('comment_id'))
+    comment_body = request.POST.get('comment_id')
+    comment = get_object_or_404(Comment, id = comment_body)
     comment.likes.add(request.user)
+    print(id,comment_body,comment)
     return HttpResponseRedirect(reverse('post',args=[str(id)]))
 
 
