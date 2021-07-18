@@ -8,8 +8,10 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    {% block metadescription %}
+        <meta name="description" content="A blog written by Rishikesh Shinde.">
+    {% endblock %}
+    <meta name="author" content="Rishikesh Shinde" />
     <script
       type="text/javascript"
       src="https://platform-api.sharethis.com/js/sharethis.js#property=60f3084ea5ae4f001925443b&product=sticky-share-buttons"

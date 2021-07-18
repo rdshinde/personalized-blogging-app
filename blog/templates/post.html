@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block title %} Blog | {{post.title}} {% endblock %}
+{% extends 'base.html' %} {% block metadescription %}
+<meta name="description" content="{{post.title}} {{post.subtitle |truncatechars:20}} ">
+{% endblock %} {% block title %} Blog | {{post.title}} {% endblock %}
 {%block content %}
 
 <!-- Page Header-->
