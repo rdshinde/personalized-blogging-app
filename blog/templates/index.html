@@ -38,6 +38,9 @@
           <a href="{% url 'about'%}">Rishikesh Shinde</a>
           on {{post.created_on}}
         </p>
+        <span><a href="{% url 'post' post.slug%}" ><i class="fa fa-heart"  aria-hidden="true"></i> {{post.likes.all.count}}</a>&nbsp; &nbsp;&nbsp;
+          <a href="{% url 'post' post.slug%}"><i class="fa fa-comment" aria-hidden="true"></i> {{post.comments.all.count}}</a>
+        </span>
       </div>
       <!-- <div>
         <form method="POST">

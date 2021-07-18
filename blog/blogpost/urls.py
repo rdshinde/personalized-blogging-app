@@ -19,7 +19,7 @@ urlpatterns = [
     path('contact',views.contact, name='contact'),
     path('posts/<str:slug>',views.posts, name='post'),
     path('like/<str:slug>',LikeView, name='like_post'),  
-    path('comment/<str:id>',CommentLike, name='like_comment'),  
+    path('posts/<int:id>',views.CommentLike, name='like_comment'),  
     # url(r'^delete/(\d+)/$',  moderation.delete, name='comments-delete'),
     url(r'^favicon\.ico$',RedirectView.as_view(url='static/assets/fevicon.ico')),
     

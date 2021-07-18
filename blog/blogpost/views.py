@@ -12,17 +12,25 @@ from django.core.mail import send_mail
 
 @login_required(login_url='login')
 def CommentLike(request,id):
-    comment_body = request.POST.get('comment_id')
-    comment = get_object_or_404(Comment, id = comment_body)
-    comment.likes.add(request.user)
-    print(id,comment_body,comment)
+    user = request.user
+    post_title = request.POST.get('comment_id')
+    comment = Comment.objects.filter(post = post_title, id=id)
+    if user in comment.likes.all():
+        comment.likes.remove(user)
+    else:
+        comment.likes.add(user)
+    print(post_title,id)
     return HttpResponseRedirect(reverse('post',args=[str(id)]))
 
 
 @login_required(login_url='login')
 def LikeView(request,slug):
+    user = request.user
     post = get_object_or_404(Post, slug = request.POST.get('post_slug'))
-    post.likes.add(request.user)
+    if user in post.likes.all():
+        post.likes.remove(user)
+    else:
+        post.likes.add(request.user)
     return HttpResponseRedirect(reverse('post',args=[str(slug )]))
 
 
@@ -59,23 +67,8 @@ def posts(request,slug):
 
 
 
-
-
-
-
-
-
-# Create your views here.
-# def index(request):
-    
-#     return render(request,"index.html")
-
-
 def about(request):
     return render(request,"about.html")
-
-
-
 
 
 # @login_required_message(message="You should be logged in to make conatact.")
@@ -167,7 +160,4 @@ def logout(request):
 
 
 
-# def LikeView(request,slug):
-#     post_like = get_object_or_404(Post, slug=slug)
-#     post.likes.add(request.user)
-#     return HttpResponseRedirect(reverse('HomeView',args=[str(slug)]))
+
