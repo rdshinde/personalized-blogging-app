@@ -10,6 +10,9 @@ from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
 
 
+
+
+
 @login_required(login_url='login')
 def CommentLike(request,id):
     user = request.user
@@ -44,7 +47,8 @@ class HomeView(ListView):
 def posts(request,slug):
     post_likes = get_object_or_404(Post,slug=slug )
     likes = post_likes.total_likes()
-    
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
     
     if request.method != 'POST':
         posts = Post.objects.get(slug = slug)
@@ -63,7 +67,8 @@ def posts(request,slug):
         
     else:
         pass
-    return render(request,"post.html",{'post':posts, 'total_likes':likes}) 
+    return render(request,"post.html",{'post':posts, 'total_likes':likes, 'num_visits': num_visits
+    }) 
 
 
 

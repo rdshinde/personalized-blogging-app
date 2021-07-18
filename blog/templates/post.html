@@ -18,6 +18,11 @@
             on {{post.created_on}}
           </span><br>
           <span>
+            <button style="background: transparent;
+            box-shadow: 0px 0px 0px transparent;
+            border: 0px solid transparent;
+            text-shadow: 0px 0px 0px transparent;
+            color: wheat;"><i class="fa fa-eye" aria-hidden="true"></i> {{num_visits}}</button>&nbsp;&nbsp;&nbsp;
             <form action="{% url 'like_post' post.slug %}" method="POST" id="like" style="display: inline-block;">
             {% csrf_token %}
             <button style="background: transparent;
@@ -28,7 +33,15 @@
             
             " type="submit" name="post_slug" value="{{ post.slug }}"><i class="fa fa-heart" aria-hidden="true"></i> {{total_likes}}</button> 
           </form>&nbsp;&nbsp;&nbsp;
-            <a href="#form" style="color: wheat;"><i class="fa fa-comment" aria-hidden="true"></i> {{post.comments.all.count}}</a>
+            <a href="#form" style="color: wheat;"><i class="fa fa-comment" aria-hidden="true"></i> {{post.comments.all.count}}</a>&nbsp;&nbsp;&nbsp;
+          <button style="background: transparent;
+          box-shadow: 0px 0px 0px transparent;
+          border: 0px solid transparent;
+          text-shadow: 0px 0px 0px transparent;
+          color: wheat;
+          
+          " onclick="alert('Please highlight the text to read aloud.')"><i class="fa fa-headphones" aria-hidden="true"></i>
+          </button>
           </span>
         </div>
       </div>
@@ -36,7 +49,7 @@
   </div>
 </header>
 <!-- Post Content-->
-<article class="mb-4">
+<article class="mb-4" id="post">
   <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
