@@ -178,7 +178,7 @@
               </div>
             </li>
           </ul>
-          <form action="{% url 'like_comment' post.slug comments.id %}" method="POST" id="Comment-like" >
+          <form action="{% url 'like_comment' comments.id %}" method="POST" id="Comment-like" >
             {% csrf_token %}
             <button style="background: transparent;
             box-shadow: 0px 0px 0px transparent;
@@ -186,7 +186,7 @@
             text-shadow: 0px 0px 0px transparent;
             color: black;
             "
-            type="submit" name="post" value="{{post.title}}"  class="btn btn-secondary"><i class="fa fa-heart" aria-hidden="true"></i> {{total_comment_likes}}</button> 
+            type="submit" name="post" value="{{post.pk}}"  class="btn btn-secondary"><i class="fa fa-heart" aria-hidden="true"></i> {{comments.likes.all.count}}</button> 
           </form><br>
           <hr />
           {% endfor %}

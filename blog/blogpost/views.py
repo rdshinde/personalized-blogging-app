@@ -8,22 +8,23 @@ from .models import Post, Comment
 from django.urls import reverse_lazy, reverse 
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
-
+from django.conf import settings
 
 
 
 
 @login_required(login_url='login')
-def CommentLike(request,slug,comment_id):
-    user = request.user
-    post_title = request.POST.get('post')
-    comment = Comment.objects.get(id=comment_id, post=post_title)
-    if user in comment.likes.all():
-        comment.likes.remove(user)
-    else:
-        comment.likes.add(user)
-    print(id)
-    return HttpResponseRedirect(reverse_lazy('post',args=[str(id)]))
+def CommentLike(request,id):
+    if request.method == 'POST':
+        user = request.user
+        pk = request.POST['post']
+        comment = get_object_or_404(Comment,id=comment_id,pk=pk)
+        if user in comment.likes.all():
+            comment.likes.remove(user)
+        else:
+            comment.likes.add(user)
+        print(id.pk)
+        return HttpResponseRedirect(reverse_lazy('post',args=[str(id)]))
 
 
 @login_required(login_url='login')
@@ -84,12 +85,12 @@ def contact(request):
         message = request.POST['message']
 
         send_mail(
-        name,
+        'Contact Me',
         'Email From: '+email+'\n'+'Contact Number: '+phone+'\n\n'+message,
         " Rishikesh's Blog "+email,
         ['kalyani2007shinde@gmail.com',email],
         fail_silently=False,)
-        messages.info(request,'Message sent succesfully!')
+        messages.success(request,'Message sent successfully!')
         
         return redirect(reverse_lazy('contact'))
 
