@@ -43,7 +43,7 @@
                 class="form-control"
                 id="name"
                 type="text"
-                placeholder="Enter your name..."
+                value="{{user.first_name}} {{user.last_name}}"
                 data-sb-validations="required"
               />
               <label for="name">Name</label>
@@ -57,7 +57,7 @@
                 class="form-control"
                 id="email"
                 type="email"
-                placeholder="Enter your email..."
+                value="{{user.email}}"
                 data-sb-validations="required,email"
               />
               <label for="email">Email address</label>

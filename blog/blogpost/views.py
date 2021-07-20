@@ -14,16 +14,16 @@ from django.core.mail import send_mail
 
 
 @login_required(login_url='login')
-def CommentLike(request,id):
+def CommentLike(request,slug,comment_id):
     user = request.user
-    post_title = request.POST.get('comment_id')
-    comment = Comment.objects.filter(post = post_title, id=id)
+    post_title = request.POST.get('post')
+    comment = Comment.objects.get(id=comment_id, post=post_title)
     if user in comment.likes.all():
         comment.likes.remove(user)
     else:
         comment.likes.add(user)
-    print(post_title,id)
-    return HttpResponseRedirect(reverse('post',args=[str(id)]))
+    print(id)
+    return HttpResponseRedirect(reverse_lazy('post',args=[str(id)]))
 
 
 @login_required(login_url='login')
@@ -34,7 +34,7 @@ def LikeView(request,slug):
         post.likes.remove(user)
     else:
         post.likes.add(request.user)
-    return HttpResponseRedirect(reverse('post',args=[str(slug )]))
+    return HttpResponseRedirect(reverse_lazy('post',args=[str(slug )]))
 
 
 
@@ -63,12 +63,10 @@ def posts(request,slug):
         post.email = email
         post.body = comment_body
         post.save()
-        return redirect('post',slug=slug)
-        
+        return redirect(reverse_lazy('post',args=[str(slug )]))  
     else:
         pass
-    return render(request,"post.html",{'post':posts, 'total_likes':likes, 'num_visits': num_visits
-    }) 
+    return render(request,"post.html",{'post':posts, 'total_likes':likes, 'num_visits': num_visits}) 
 
 
 
@@ -88,12 +86,12 @@ def contact(request):
         send_mail(
         name,
         'Email From: '+email+'\n'+'Contact Number: '+phone+'\n\n'+message,
-        "Rishikesh's Blog"+email,
+        " Rishikesh's Blog "+email,
         ['kalyani2007shinde@gmail.com',email],
         fail_silently=False,)
         messages.info(request,'Message sent succesfully!')
         
-        return redirect('contact')
+        return redirect(reverse_lazy('contact'))
 
 
     else:
@@ -116,10 +114,10 @@ def login(request):
 
         if user is not None:
             auth.login(request,user)
-            return redirect('index')
+            return redirect(reverse_lazy('index'))
         else:
             messages.info(request, 'Invalid Credentials!')
-            return redirect('login')
+            return redirect(reverse_lazy('login'))
     
     return render(request, 'login.html')
 
@@ -137,10 +135,10 @@ def signup(request):
         
         if User.objects.filter(email=email).exists():
             messages.info(request,'Email Already Used')
-            return redirect('signup')
+            return redirect(reverse_lazy('signup'))
         elif User.objects.filter(username=username).exists():
             messages.info(request,'Username Already Used')
-            return redirect('signup')
+            return redirect(reverse_lazy('signup'))
         else:
             user = User.objects.create_user(first_name=first_name,last_name=last_name,username=username,password=password,email=email)
             user.save()
@@ -148,7 +146,7 @@ def signup(request):
             send_mail(
             'Account Created Succfully!',
             'Welcome to a blog by Rishikesh\n'+'Your Username is: '+ username +'\n Password is: '+ password +'\n Login at: '+'shinderd.pythonanywhere.com/login',
-            "Rishikesh's Blog"+'kalyani2007shinde@gmail.com',
+            " Rishikesh's Blog "+'kalyani2007shinde@gmail.com',
             [email],
             fail_silently=False)
             return redirect('login')

@@ -19,9 +19,9 @@ urlpatterns = [
     path('contact',views.contact, name='contact'),
     path('posts/<str:slug>',views.posts, name='post'),
     path('like/<str:slug>',LikeView, name='like_post'),  
-    path('posts/<int:id>',views.CommentLike, name='like_comment'),  
+    path('posts/<str:slug>/<str:comment_id>',views.CommentLike, name='like_comment'),  
     # url(r'^delete/(\d+)/$',  moderation.delete, name='comments-delete'),
-    url(r'^favicon\.ico$',RedirectView.as_view(url='static/assets/fevicon.ico')),
+    url(r'^favicon\.ico$',RedirectView.as_view(url='static/fevicon.ico')),
     
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
