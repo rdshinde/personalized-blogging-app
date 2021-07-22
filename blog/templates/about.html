@@ -1,11 +1,6 @@
-{% extends 'base.html' %}
-{% block title %} About {% endblock %}
-{% block content %}
+{% extends 'base.html' %} {% block title %} Blog | About {% endblock %} {% block content %}
 <!-- Page Header-->
-<header
-  class="masthead"
-  style="background-image: none"
->
+<header class="masthead" style="background-image: none">
   <div class="container position-relative px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
@@ -22,24 +17,26 @@
   <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
+        <img
+          src="https://lh3.googleusercontent.com/LVYygxdWiwp2zOTRdegMHfDUB8QBtEWD2pMR1Y59MXurWfxANF-dTB3s2fZ5IvFaNX9TnJ8hud5K4lIA3_1tMQYE2ttU-wBBP6at-Dy9bEG_7ezS5ftPcTElnbossLD38f0zzRMzbqrB-Ouyu6q8qzN7VhvJPLKdu0kTQfkcV4v1uBLFl98tKFzjB0szmAsw2EiFaq65rzWaeG0XPk_lYDjFk-kMCZ3kS13aqMdeSE9IIK8j4_Ao9XXtlr7dibeDaro8ylc7FDJ1H05wtEH0dihM25EfXsYFOuWYKrKDh0usHZwTuVxTjCcn5xJ1BHP8gnjYYxh03XTJTV6MXRHzixrcEsli1LNNQwGn7jrmsHYZ5dviofiF3Hxsv50mj-_H3vwqjNUwPwmDgzg7LGQVBLOOfvrI9AqlWR7lLVHk8NBHg8VfBrxlNzAQrK9vzJGkWU8jkanef5Z4XiRT7FGF4DGiLFdn7unGs6z0jBVKqoswLNWtK3lVcLp-wLtiveGQhPDKub55RKeIOakedSQe4XEWOGiiJDCQ989-se2F0gmLasi2kO7SkY5t9bPqmlJfZfOaQi3IKqJuroJBcj0nqCK6unKgTp2XoSiQQekDXu0i0Ep3XsfESqUGEVz3OPF-76CGW7nPUH2VDOyYffzB5McxqIYPNkN8pKUmL5yLQA4_7_t5nQLaWdNiXaUHgevAM2J9UnbsILSsz5GEHRKjUSje=w1488-h1646-no?authuser=0"
+          class=" mx-auto d-block"
+          alt="..." style="width: 30%; padding: 10px;border: 1px white solid; border-radius:50%;"
+        />
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe
-          nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis
-          sit soluta odio, adipisci quas excepturi maxime quae totam ducimus
-          consectetur?
+          Hello Readers, myself <a href="{% url 'about'%}">Rishikesh Shinde.</a> Currently, I am a Computer Science undergraduate student.
         </p>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius
-          praesentium recusandae illo eaque architecto error, repellendus iusto
-          reprehenderit, doloribus, minus sunt. Numquam at quae voluptatum in
-          officia voluptas voluptatibus, minus!
+          Besides learning Computer Science, I like to keep an eye on new evolving technologies. On this blog I am trying to write on new technologies as well as computer science related stuff. I hope you would like it.
         </p>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut
-          consequuntur magnam, excepturi aliquid ex itaque esse est vero natus
-          quae optio aperiam soluta voluptatibus corporis atque iste neque sit
-          tempora!
-        </p>
+          Talking about this blogging app, 
+          this app have some features like : <ul>
+            <a href="{% url 'signup'%}"> <li>User Authentication</li></a>
+            <a href="{% url 'index'%}"> <li>Like, Comment and Share feature for blogposts</li></a>
+            <a href="#"> <li>Read Aloud (Note : Highlight the Text.)</li></a>
+            <a href="#"> <li>Email Notifications, etc.</li></a> 
+          </ul></p> I hope these would improve your reading experience.
+        <p>If you want to me <a href="{% url 'contact'%}"> conatct</a>, please do conatact using <a href="{% url 'contact'%}"> contact page.</a> Till then keep reading and don't forget to share this blog with yours. <br> Thanks for visiting!</p>
       </div>
     </div>
   </div>

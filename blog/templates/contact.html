@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block title %} Contact {% endblock %} {% block content %}
+{% extends 'base.html' %} {% block title %} Blog | Contact {% endblock %} {% block content %}
 <!-- Page Header-->
 <header class="masthead" style="background-image: none">
   <div class="container position-relative px-4 px-lg-5">
@@ -17,7 +17,7 @@
   <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
       {% for message in messages %}
-      <div class="alert alert-info alert-dismissible fade show" role="alert">
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{message}}
       </div>
       {% endfor %}
@@ -43,7 +43,7 @@
                 class="form-control"
                 id="name"
                 type="text"
-                placeholder="Enter your name..."
+                value="{{user.first_name}} {{user.last_name}}"
                 data-sb-validations="required"
               />
               <label for="name">Name</label>
@@ -57,7 +57,7 @@
                 class="form-control"
                 id="email"
                 type="email"
-                placeholder="Enter your email..."
+                value="{{user.email}}"
                 data-sb-validations="required,email"
               />
               <label for="email">Email address</label>
@@ -74,7 +74,7 @@
                 class="form-control"
                 id="phone"
                 type="tel"
-                placeholder="Enter your phone number..."
+                placeholder="Enter your mobile number..."
                 data-sb-validations="required"
               />
               <label for="phone">Phone Number</label>
@@ -97,7 +97,7 @@
               </div>
             </div>
             <br />
-            
+
             <!-- Submit Button-->
             <button
               class="btn btn-primary text-uppercase"

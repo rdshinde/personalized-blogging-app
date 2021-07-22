@@ -28,6 +28,7 @@
     <div class="col-md-10 col-lg-8 col-xl-7">
       <!-- Post preview-->
       {% for post in object_list %}
+
       <div class="post-preview">
         <a href="{% url 'post' post.slug %}">
           <h2 class="post-title">{{post.title}}</h2>
@@ -38,7 +39,18 @@
           <a href="{% url 'about'%}">Rishikesh Shinde</a>
           on {{post.created_on}}
         </p>
+        <span
+          ><a href="{% url 'post' post.slug%}"
+            ><i class="fa fa-heart" aria-hidden="true"></i>
+            {{post.likes.all.count}}</a
+          >&nbsp; &nbsp;&nbsp;
+          <a href="{% url 'post' post.slug%}"
+            ><i class="fa fa-comment" aria-hidden="true"></i>
+            {{post.comments.all.count}}</a
+          >
+        </span>
       </div>
+      
       <!-- <div>
         <form method="POST">
           {% csrf_token %} <button type="submit" value="{{post.slug}}" name="post_slug"  ><i class="fas fa-heart"></i></button> {{blog_post.likes.count}}
@@ -46,6 +58,7 @@
       </div> -->
       <!-- Divider-->
       <hr class="my-4" />
+
       {% endfor %}
 
       <!-- Pager-->
