@@ -13,7 +13,8 @@ from django.conf import settings
 
 
 
-
+def model(request):
+    return render(request, 'model.html')
 
 
 @login_required(login_url='login')
@@ -135,7 +136,7 @@ def signup(request):
             messages.info(request,'Account Created Succesfully!')
             send_mail(
             'Account Created Succfully!',
-            'Welcome to a blog by Rishikesh\n'+'Your Username is: '+ username +'\n Password is: '+ password +'\n Login at: '+'shinderd.pythonanywhere.com/login',
+            'Welcome to a blog by Rishikesh\n'+'Username : '+ username +'\n Password : '+ password +'\n Login at: '+'shinderd.pythonanywhere.com/login',
             " Rishikesh's Blog "+'kalyani2007shinde@gmail.com',
             [email],
             fail_silently=False)

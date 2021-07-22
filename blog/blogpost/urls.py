@@ -12,6 +12,7 @@ from .views import HomeView,LikeView
 
 urlpatterns = [
     path('', HomeView.as_view() , name='index'),
+    path('model', views.model , name='model'),
     path('login', views.login, name='login'),
     path('logout', views.logout, name='logout'),
     path('signup', views.signup, name='signup'),
@@ -19,8 +20,6 @@ urlpatterns = [
     path('contact',views.contact, name='contact'),
     path('posts/<str:slug>',views.posts, name='post'),
     path('like/<str:slug>',LikeView, name='like_post'),  
-    # path('posts/<str:id>',views.CommentLike, name='like_comment'),  
-    # url(r'^delete/(\d+)/$',  moderation.delete, name='comments-delete'),
     url(r'^favicon\.ico$',RedirectView.as_view(url='static/fevicon.ico')),
     
     
