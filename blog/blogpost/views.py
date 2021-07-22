@@ -13,18 +13,7 @@ from django.conf import settings
 
 
 
-@login_required(login_url='login')
-def CommentLike(request,id):
-    if request.method == 'POST':
-        user = request.user
-        pk = request.POST['post']
-        comment = get_object_or_404(Comment,id=comment_id,pk=pk)
-        if user in comment.likes.all():
-            comment.likes.remove(user)
-        else:
-            comment.likes.add(user)
-        print(id.pk)
-        return HttpResponseRedirect(reverse_lazy('post',args=[str(id)]))
+
 
 
 @login_required(login_url='login')

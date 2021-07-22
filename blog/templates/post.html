@@ -4,10 +4,7 @@
 {%block content %}
 
 <!-- Page Header-->
-<header
-  class="masthead"
-  style="background-image: none"
->
+<header class="masthead" style="background-image: none">
   <div class="container position-relative px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
@@ -26,24 +23,27 @@
             text-shadow: 0px 0px 0px transparent;
             color: wheat;"><i class="fa fa-eye" aria-hidden="true"></i> {{num_visits}}</button>&nbsp;&nbsp;&nbsp;
             <form action="{% url 'like_post' post.slug %}" method="POST" id="like" style="display: inline-block;">
-            {% csrf_token %}
-            <button style="background: transparent;
+              {% csrf_token %}
+              <button style="background: transparent;
             box-shadow: 0px 0px 0px transparent;
             border: 0px solid transparent;
             text-shadow: 0px 0px 0px transparent;
             color: wheat;
             
-            " type="submit" name="post_slug" value="{{ post.slug }}"><i class="fa fa-heart" aria-hidden="true"></i> {{total_likes}}</button> 
-          </form>&nbsp;&nbsp;&nbsp;
-            <a href="#form" style="color: wheat;"><i class="fa fa-comment" aria-hidden="true"></i> {{post.comments.all.count}}</a>&nbsp;&nbsp;&nbsp;
-          <button style="background: transparent;
+            " type="submit" name="post_slug" value="{{ post.slug }}"><i class="fa fa-heart" aria-hidden="true"></i>
+                {{total_likes}}</button>
+            </form>&nbsp;&nbsp;&nbsp;
+            <a href="#form" style="color: wheat;"><i class="fa fa-comment" aria-hidden="true"></i>
+              {{post.comments.all.count}}</a>&nbsp;&nbsp;&nbsp;
+            <button style="background: transparent;
           box-shadow: 0px 0px 0px transparent;
           border: 0px solid transparent;
           text-shadow: 0px 0px 0px transparent;
           color: wheat;
           
-          " onclick="alert('Please highlight the text to read aloud.')"><i class="fa fa-headphones" aria-hidden="true"></i>
-          </button>
+          " onclick="alert('Please highlight the text to read aloud.')"><i class="fa fa-headphones"
+                aria-hidden="true"></i>
+            </button>
           </span>
         </div>
       </div>
@@ -56,11 +56,7 @@
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
         {% if post.img_field != None %}
-        <img
-          src="{{post.img_field.url}}"
-          class="img-fluid"
-          alt="Responsive image"
-        />
+        <img src="{{post.img_field.url}}" class="img-fluid" alt="Responsive image" />
         {% endif %}
         <p width="">{{post.content|safe}}</p>
 
@@ -74,111 +70,89 @@
           }
         </style>
 
-        <iframe width="100%" height="375" src="{{post.url_field}} "> </iframe> 
+        <iframe width="100%" height="375" src="{{post.url_field}} "> </iframe>
         {% endif %}
       </div>
-      
+
       <hr>
     </div>
   </div>
 </article>
 {% if user.is_authenticated %}
-<!-- Add Comments -->  
+<!-- Add Comments -->
 <section class="container px-4 px-lg-5">
   <div class="row gx-4 gx-lg-5 justify-content-center" id="form">
     <div class="col-md-10 col-lg-8 col-xl-7">
       <h2 style="text-align: center">Leave A Comment</h2>
       <br />
       <!-- Add the Login form Here -->
-      <form method="POST" autocomplete="off" >
+      <form method="POST" autocomplete="off">
         {% csrf_token %}
         <div class="form-group">
           <label for="formGroupExampleInput">Name</label>
-          <input
-            name="name"
-            type="text"
-            class="form-control"
-            id="formGroupExampleInput"
-            value="{{user.first_name}} {{user.last_name}}"
-            required
-          />
+          <input name="name" type="text" class="form-control" id="formGroupExampleInput"
+            value="{{user.first_name}} {{user.last_name}}" required />
         </div>
         <br />
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
-          <input
-            name="email"
-            type="email"
-            class="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            value="{{user.email}}"
-            required
-          />
-          <small id="emailHelp" class="form-text text-muted"
-            >We'll never share your email with anyone else.</small
-          >
+          <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+            value="{{user.email}}" required />
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <br />
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Comment</label>
-          <textarea
-            placeholder="Write your comment."
-            required
-            name="comment"
-            class="form-control"
-            id="exampleFormControlTextarea1"
-            rows="3"
-          ></textarea>
+          <textarea placeholder="Write your comment." required name="comment" class="form-control"
+            id="exampleFormControlTextarea1" rows="3"></textarea>
         </div>
         <br />
         <button type="submit" class="btn btn-primary" style="text-align: center;">Comment</button><br />
         {% else %}
-<a href="{% url 'login'%}" class="btn btn-primary"
-  >Please Login To Add and View Comments
-</a>
-    <br />
+        <a href="{% url 'login'%}" class="btn btn-primary">Please Login To Add and View Comments
+        </a>
+        <br />
 
-    {% endif %}
+        {% endif %}
       </form>
     </div>
   </div>
 </section>
 
-    <!-- Comment Section -->
-    {% if user.is_authenticated %}
-    <section class="container px-4 px-lg-5">
-      <div class="row gx-4 gx-lg-5 justify-content-center">
-        <div class="col-md-10 col-lg-8 col-xl-7">
-          <br />
-          <hr />
-          <br />
-          <h2 style="text-align: center">Comments</h2>
-          <br />
-          <hr />
-          {% if not post.comments.all %}
-          <p style="text-align: center">No Comments <br><br><a href="#form" class="btn btn-primary" style="text-decoration: none;"
-            >Add One
-          </a> </p>
-          {% endif %} {% for comments in post.comments.all %}
-          <ul>
-            <li>
-              <p class="post-meta">
-                Posted by <strong>{{comments.name}}</strong>
-                
-                on {{comments.created_on}}
-              </p>
-              <!-- <small>
+<!-- Comment Section -->
+{% if user.is_authenticated %}
+<section class="container px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      <br />
+      <hr />
+      <br />
+      <h2 style="text-align: center">Comments</h2>
+      <br />
+      <hr />
+      {% if not post.comments.all %}
+      <p style="text-align: center">No Comments <br><br><a href="#form" class="btn btn-primary"
+          style="text-decoration: none;">Add One
+        </a> </p>
+      {% endif %} {% for comments in post.comments.all %}
+      <ul>
+        <li>
+          <p class="post-meta">
+            Posted by <strong>{{comments.name}}</strong>
+
+            on {{comments.created_on}}
+          </p>
+          <!-- <small>
             Comment By - <strong>{{comments.name}}</strong> on
             {{comments.created_on}}
           </small> -->
 
-              <div class="container">
-                <p>{{comments.body}}</p>
-              </div>
-            </li>
-          </ul>
-          <form action="{% url 'like_comment' comments.id %}" method="POST" id="Comment-like" >
+          <div class="container">
+            <p>{{comments.body}}</p>
+          </div>
+        </li>
+      </ul>
+      <!-- <form action="{% url 'like_comment' comments.id %}" method="POST" id="Comment-like" >
             {% csrf_token %}
             <button style="background: transparent;
             box-shadow: 0px 0px 0px transparent;
@@ -187,12 +161,11 @@
             color: black;
             "
             type="submit" name="post" value="{{post.pk}}"  class="btn btn-secondary"><i class="fa fa-heart" aria-hidden="true"></i> {{comments.likes.all.count}}</button> 
-          </form><br>
-          <hr />
-          {% endfor %}
-        </div>
-      </div>
-    </section>
-    {% endif %} {% endblock %}
-  </a></a
->
+          </form><br> -->
+      <hr />
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %} {% endblock %}
+</a></a>
