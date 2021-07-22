@@ -76,9 +76,9 @@ def contact(request):
         send_mail(
         'Contact Me',
         'Email From: '+email+'\n'+'Contact Number: '+phone+'\n\n'+message,
-        " Rishikesh's Blog "+email,
+        " Rishikesh's Blog " + email,
         ['kalyani2007shinde@gmail.com',email],
-        fail_silently=False,)
+        fail_silently=False)
         messages.success(request,'Message sent successfully!')
         
         return redirect(reverse_lazy('contact'))
@@ -135,7 +135,7 @@ def signup(request):
             messages.info(request,'Account Created Succesfully!')
             send_mail(
             'Account Created Succfully!',
-            'Welcome to a blog by Rishikesh\n'+'Your Username is: '+ username +'\n Password is: '+ password +'\n Login at: '+'shinderd.pythonanywhere.com/login',
+            'Welcome to a blog by Rishikesh\n'+'Username : '+ username +'\n Password : '+ password +'\n Login at: '+'shinderd.pythonanywhere.com/login',
             " Rishikesh's Blog "+'kalyani2007shinde@gmail.com',
             [email],
             fail_silently=False)
